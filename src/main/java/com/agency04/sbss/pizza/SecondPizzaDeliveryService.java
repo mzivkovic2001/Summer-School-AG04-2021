@@ -5,12 +5,12 @@ public class SecondPizzaDeliveryService implements IPizzaDeliveryService {
 
     // no arg constructor
     public SecondPizzaDeliveryService() {
-        System.out.println("RegisteredPizzaDeliveryService - inside no-arg constructor.");
+        System.out.println("SecondPizzaDeliveryService - inside no-arg constructor.");
     }
 
     // setter method
     public void set_pizzeriaService(IPizzeriaService _pizzeriaService) {
-        System.out.println("RegisteredPizzaDeliveryService - inside setter method (set_pizzeriaService).");
+        System.out.println("SecondPizzaDeliveryService - inside setter method (set_pizzeriaService).");
         this._pizzeriaService = _pizzeriaService;
     }
     @Override
