@@ -7,6 +7,32 @@
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <!-- load the properties file -->
+    <context:property-placeholder location="classpath:application.properties"></context:property-placeholder>
     <!-- Define your Beans here -->
+    <!-- Pizza objects -->
+    <bean id="margherita" class="com.agency04.sbss.pizza.Margherita"></bean>
+    <bean id="capricciosa" class="com.agency04.sbss.pizza.Capricciosa"></bean>
+
+    <!-- Dependencies -->
+    <bean id="firstPizzeriaService" class="com.agency04.sbss.pizza.FirstPizzeriaService">
+        <!-- Inject literal values -->
+        <property name="name" value="Pizza Bar"></property>
+        <property name="address" value="Vodovodna 25"></property>
+    </bean>
+    <bean id="secondPizzeriaService" class="com.agency04.sbss.pizza.SecondPizzeriaService">
+        <!-- Inject from application.properties file -->
+        <property name="name" value="${foo.name}"></property>
+        <property name="address" value="${foo.address}"></property>
+    </bean>
+
+    <bean id="firstPizzaDeliveryService" class="com.agency04.sbss.pizza.FirstPizzaDeliveryService">
+        <constructor-arg ref="firstPizzeriaService"></constructor-arg>
+    </bean>
+
+    <bean id="secondPizzaDeliveryService" class="com.agency04.sbss.pizza.SecondPizzaDeliveryService">
+        <!-- Set up setter injection -->
+        <property name="_pizzeriaService" ref="secondPizzeriaService"></property>
+    </bean>
 
 </beans>
