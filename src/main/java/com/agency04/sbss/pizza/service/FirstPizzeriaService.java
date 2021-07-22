@@ -1,8 +1,15 @@
-package com.agency04.sbss.pizza;
+package com.agency04.sbss.pizza.service;
 
+import com.agency04.sbss.pizza.model.IPizza;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
 public class FirstPizzeriaService implements IPizzeriaService {
     // Private fields
+    @Value("Papizza")
     private String name;
+    @Value("Vodovodna 25")
     private String address;
 
     // getters & setters

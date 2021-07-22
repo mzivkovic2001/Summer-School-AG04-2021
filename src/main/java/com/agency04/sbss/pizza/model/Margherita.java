@@ -1,8 +1,11 @@
-package com.agency04.sbss.pizza;
+package com.agency04.sbss.pizza.model;
+
+import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.List;
 
+@Component
 public class Margherita implements IPizza {
     @Override
     public String getName() {

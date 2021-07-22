@@ -1,4 +1,7 @@
-package com.agency04.sbss.pizza;
+package com.agency04.sbss.pizza.service;
+
+import com.agency04.sbss.pizza.model.IPizza;
+import com.agency04.sbss.pizza.model.PizzaIngredient;
 
 public class OrderDescription {
     static String getOrderDescription(IPizza orderedPizza, IPizzeriaService pizzeriaService)
