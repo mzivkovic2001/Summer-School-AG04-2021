@@ -12,9 +12,7 @@ public class OrderDescription {
 
         orderDescription += orderedPizza.getIngredients()
                 .stream()
-                .map((PizzaIngredient ingredient) -> {
-                    return ingredient.getName();
-                })
+                .map(PizzaIngredient::getName)
         .collect(Collectors.joining(", ", "", "."));
 
         orderDescription += "\nFrom: \"" + pizzeriaService.getName() + "\" " + pizzeriaService.getAddress();
