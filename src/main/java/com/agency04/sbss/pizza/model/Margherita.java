@@ -14,12 +14,11 @@ public class Margherita implements IPizza {
 
     @Override
     public List<PizzaIngredient> getIngredients() {
-        List<PizzaIngredient> margheritaIngredients = Arrays.asList
+        return Arrays.asList
                 (
                         PizzaIngredient.TOMATO_SAUCE,
                         PizzaIngredient.MOZZARELLA,
                         PizzaIngredient.OREGANO
                 );
-        return margheritaIngredients;
     }
 }

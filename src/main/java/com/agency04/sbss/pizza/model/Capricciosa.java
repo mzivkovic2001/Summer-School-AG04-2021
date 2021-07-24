@@ -14,7 +14,7 @@ public class Capricciosa implements IPizza {
 
     @Override
     public List<PizzaIngredient> getIngredients() {
-        List<PizzaIngredient> capricciosaIngredients = Arrays.asList
+        return Arrays.asList
                 (
                         PizzaIngredient.TOMATO_SAUCE,
                         PizzaIngredient.MOZZARELLA,
@@ -24,6 +24,5 @@ public class Capricciosa implements IPizza {
                         PizzaIngredient.MUSHROOMS,
                         PizzaIngredient.OLIVES
                 );
-        return capricciosaIngredients;
     }
 }

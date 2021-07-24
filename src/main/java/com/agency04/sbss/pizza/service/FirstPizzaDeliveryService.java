@@ -7,16 +7,16 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class FirstPizzaDeliveryService implements IPizzaDeliveryService {
-    private IPizzeriaService _pizzeriaService;
+    private IPizzeriaService pizzeriaService;
 
     @Autowired
-    public FirstPizzaDeliveryService(@Qualifier("firstPizzeriaService")IPizzeriaService pizzeriaService)
+    public FirstPizzaDeliveryService(@Qualifier("firstPizzeriaService")IPizzeriaService firstPizzeriaService)
     {
-        _pizzeriaService = pizzeriaService;
+        pizzeriaService = firstPizzeriaService;
     }
 
     @Override
     public String orderPizza(IPizza orderedPizza) {
-        return OrderDescription.getOrderDescription(orderedPizza, _pizzeriaService);
+        return OrderDescription.getOrderDescription(orderedPizza, pizzeriaService);
     }
 }
