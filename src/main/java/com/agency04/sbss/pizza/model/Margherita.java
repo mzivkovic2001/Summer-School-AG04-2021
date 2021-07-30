@@ -9,9 +9,19 @@ import java.util.List;
 
 @Component
 public class Margherita implements IPizza {
+    private String name;
+    private List<PizzaIngredient> ingredients;
+
     @PostConstruct
     public void initIt() {
-        System.out.println(">>Margherita - inside initIt()");
+        name = "Margherita";
+        ingredients = Arrays.asList
+                (
+                        PizzaIngredient.TOMATO_SAUCE,
+                        PizzaIngredient.MOZZARELLA,
+                        PizzaIngredient.OREGANO
+                );
+        System.out.println(">>Margherita - inside initIt(). Name: " + name);
     }
 
     @PreDestroy
@@ -21,16 +31,11 @@ public class Margherita implements IPizza {
 
     @Override
     public String getName() {
-        return "Margherita";
+        return name;
     }
 
     @Override
     public List<PizzaIngredient> getIngredients() {
-        return Arrays.asList
-                (
-                        PizzaIngredient.TOMATO_SAUCE,
-                        PizzaIngredient.MOZZARELLA,
-                        PizzaIngredient.OREGANO
-                );
+        return ingredients;
     }
 }

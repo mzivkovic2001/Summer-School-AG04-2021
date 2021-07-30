@@ -9,26 +9,13 @@ import java.util.List;
 
 @Component
 public class Capricciosa implements IPizza {
+    private String name;
+    private List<PizzaIngredient> ingredients;
 
     @PostConstruct
     public void initIt() {
-        System.out.println(">>Capricciosa - inside initIt()");
-    }
-
-    @PreDestroy
-    public void cleanUp() {
-        System.out.println(">>Capricciosa - inside cleanUp()");
-    }
-
-    @Override
-    public String getName() {
-        return "Capricciosa";
-    }
-
-    @Override
-    public List<PizzaIngredient> getIngredients() {
-
-        return Arrays.asList
+        name = "Capricciosa";
+        ingredients = Arrays.asList
                 (
                         PizzaIngredient.TOMATO_SAUCE,
                         PizzaIngredient.MOZZARELLA,
@@ -38,5 +25,21 @@ public class Capricciosa implements IPizza {
                         PizzaIngredient.MUSHROOMS,
                         PizzaIngredient.OLIVES
                 );
+        System.out.println(">>Capricciosa - inside initIt(). Name: " + name);
+    }
+
+    @PreDestroy
+    public void cleanUp() {
+        System.out.println(">>Capricciosa - inside cleanUp()");
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public List<PizzaIngredient> getIngredients() {
+        return ingredients;
     }
 }

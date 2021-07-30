@@ -1,20 +1,14 @@
 package com.agency04.sbss.pizza.service;
 
 import com.agency04.sbss.pizza.model.IPizza;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
-@Component
-@Scope("singleton")
+// manually constructed bean inside of PizzaConfig
 public class FirstPizzeriaService implements IPizzeriaService {
     // Private fields
-    @Value("Papizza")
     private String name;
-    @Value("Vodovodna 25")
     private String address;
 
     // getters & setters
@@ -30,7 +24,9 @@ public class FirstPizzeriaService implements IPizzeriaService {
     // define init method
     @PostConstruct
     public void initIt() {
-        System.out.println(">>FirstPizzeriaService: inside of doMyStartupStuff().");
+        name = "Papizza";
+        address = "Vodovodna 25";
+        System.out.println(">>FirstPizzeriaService: inside of initIt().");
     }
 
     // define destroy method

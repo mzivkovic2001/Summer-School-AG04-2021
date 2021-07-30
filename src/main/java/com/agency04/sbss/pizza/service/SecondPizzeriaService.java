@@ -2,14 +2,12 @@ package com.agency04.sbss.pizza.service;
 
 import com.agency04.sbss.pizza.model.IPizza;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
-@Component
-@Scope("prototype")
+@Service
 public class SecondPizzeriaService implements IPizzeriaService {
     @Value("${foo.name}")
     private String name;
