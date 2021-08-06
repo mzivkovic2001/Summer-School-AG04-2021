@@ -2,19 +2,20 @@ package com.agency04.sbss.pizza.model;
 
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.util.Arrays;
 import java.util.List;
 
 @Component
 public class Capricciosa implements IPizza {
-    @Override
-    public String getName() {
-        return "Capricciosa";
-    }
+    private String name;
+    private List<PizzaIngredient> ingredients;
 
-    @Override
-    public List<PizzaIngredient> getIngredients() {
-        return Arrays.asList
+    @PostConstruct
+    public void initIt() {
+        name = "Capricciosa";
+        ingredients = Arrays.asList
                 (
                         PizzaIngredient.TOMATO_SAUCE,
                         PizzaIngredient.MOZZARELLA,
@@ -24,5 +25,21 @@ public class Capricciosa implements IPizza {
                         PizzaIngredient.MUSHROOMS,
                         PizzaIngredient.OLIVES
                 );
+        System.out.println(">>Capricciosa - inside initIt(). Name: " + name);
+    }
+
+    @PreDestroy
+    public void cleanUp() {
+        System.out.println(">>Capricciosa - inside cleanUp()");
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public List<PizzaIngredient> getIngredients() {
+        return ingredients;
     }
 }

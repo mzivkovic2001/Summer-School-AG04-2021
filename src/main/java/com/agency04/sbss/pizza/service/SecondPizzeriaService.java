@@ -2,9 +2,12 @@ package com.agency04.sbss.pizza.service;
 
 import com.agency04.sbss.pizza.model.IPizza;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
+@Service
 public class SecondPizzeriaService implements IPizzeriaService {
     @Value("${foo.name}")
     private String name;
@@ -17,6 +20,18 @@ public class SecondPizzeriaService implements IPizzeriaService {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    // define init method
+    @PostConstruct
+    public void initIt() {
+        System.out.println(">>SecondPizzeriaService: inside of doMyStartupStuff(). Name: " + name);
+    }
+
+    // define destroy method
+    @PreDestroy
+    public void cleanUp() {
+        System.out.println(">>SecondPizzeriaService: inside of cleanUp().");
     }
 
     @Override
