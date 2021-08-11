@@ -1,18 +1,23 @@
 package com.agency04.sbss.pizza.service;
 
-import com.agency04.sbss.pizza.model.IPizza;
+import com.agency04.sbss.pizza.model.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
-public class SecondPizzeriaService implements IPizzeriaService {
+public class PizzeriaService implements IPizzeriaService {
     @Value("${foo.name}")
     private String name;
     @Value("${foo.address}")
     private String address;
+    @Autowired
+    private IMockDbService mockDbService;
 
     public void setName(String name) {
         this.name = name;
@@ -45,7 +50,16 @@ public class SecondPizzeriaService implements IPizzeriaService {
     }
 
     @Override
-    public void makePizza(IPizza pizzaToMake) {
+    public void makePizza(Pizza pizzaToMake) {
 
+    }
+    @Override
+    public PizzeriaInfo getPizzeriaInfo() {
+        return new PizzeriaInfo(getName(), getAddress());
+    }
+
+    @Override
+    public PizzeriaMenu getPizzeriaMenu() {
+        return new PizzeriaMenu(mockDbService.getData("pizzas"), Stream.of(PizzaSize.values()).collect(Collectors.toList()));
     }
 }

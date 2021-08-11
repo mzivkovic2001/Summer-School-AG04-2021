@@ -1,12 +1,12 @@
 package com.agency04.sbss.pizza.service;
 
-import com.agency04.sbss.pizza.model.IPizza;
+import com.agency04.sbss.pizza.model.Pizza;
 import com.agency04.sbss.pizza.model.PizzaIngredient;
 
 import java.util.stream.Collectors;
 
 public class OrderDescription {
-    static String getOrderDescription(IPizza orderedPizza, IPizzeriaService pizzeriaService)
+    static String getOrderDescription(Pizza orderedPizza, IPizzeriaService pizzeriaService)
     {
         String orderDescription = "\nYou ordered " + orderedPizza.getName() + ": ";
 

@@ -1,0 +1,102 @@
+{
+  "deliveryOrders" : [ {
+    "id" : 1,
+    "customer" : {
+      "id" : 4,
+      "name" : "Luka",
+      "surname" : "Lukic",
+      "username" : "luka20",
+      "phoneNumber" : "0958774127",
+      "address" : "Zagrebacka 20"
+    },
+    "orderedPizzas" : [ {
+      "pizzaId" : 1,
+      "size" : "MEDIUM",
+      "quantity" : 2,
+      "price" : 112.0
+    }, {
+      "pizzaId" : 2,
+      "size" : "LARGE",
+      "quantity" : 1,
+      "price" : 63.0
+    } ]
+  }, {
+    "id" : 2,
+    "customer" : {
+      "id" : 1,
+      "name" : "Ivo",
+      "surname" : "Ivic",
+      "username" : "fastFoodLover",
+      "phoneNumber" : "0912589635",
+      "address" : "Vukovarska 11"
+    },
+    "orderedPizzas" : [ {
+      "pizzaId" : 5,
+      "size" : "FAMILY",
+      "quantity" : 1,
+      "price" : 66.0
+    } ]
+  } ],
+  "pizzas" : [ {
+    "id" : 1,
+    "name" : "Margherita",
+    "price" : 51.0,
+    "ingredients" : [ "TOMATO_SAUCE", "MOZZARELLA", "OREGANO" ]
+  }, {
+    "id" : 2,
+    "name" : "Marinara",
+    "price" : 53.0,
+    "ingredients" : [ "TOMATO_SAUCE", "MOZZARELLA", "OREGANO", "HAM", "ARTICHOKES", "MUSHROOMS", "OLIVES" ]
+  }, {
+    "id" : 3,
+    "name" : "Quattro Stagioni",
+    "price" : 42.0,
+    "ingredients" : [ "TOMATO_SAUCE", "MOZZARELLA", "OREGANO", "HAM", "ARTICHOKES", "MUSHROOMS", "OLIVES" ]
+  }, {
+    "id" : 4,
+    "name" : "Crudo",
+    "price" : 40.0,
+    "ingredients" : [ "TOMATO_SAUCE", "MOZZARELLA", "OREGANO", "HAM", "ARTICHOKES", "MUSHROOMS", "OLIVES" ]
+  }, {
+    "id" : 5,
+    "name" : "Capricciosa",
+    "price" : 51.0,
+    "ingredients" : [ "TOMATO_SAUCE", "MOZZARELLA", "OREGANO", "HAM", "ARTICHOKES", "MUSHROOMS", "OLIVES" ]
+  } ],
+  "customers" : [ {
+    "id" : 1,
+    "name" : "Ivo",
+    "surname" : "Ivic",
+    "username" : "fastFoodLover",
+    "phoneNumber" : "0912589635",
+    "address" : "Vukovarska 11"
+  }, {
+    "id" : 2,
+    "name" : "Ana",
+    "surname" : "Anic",
+    "username" : "ana123",
+    "phoneNumber" : "0958774125",
+    "address" : "Zagrebacka 12"
+  }, {
+    "id" : 3,
+    "name" : "Marko",
+    "surname" : "Maric",
+    "username" : "marco25",
+    "phoneNumber" : "0958774126",
+    "address" : "Zagrebacka 18"
+  }, {
+    "id" : 4,
+    "name" : "Luka",
+    "surname" : "Lukic",
+    "username" : "luka20",
+    "phoneNumber" : "0958774127",
+    "address" : "Zagrebacka 20"
+  }, {
+    "id" : 5,
+    "name" : "Sanja",
+    "surname" : "Juric",
+    "username" : "sanja15",
+    "phoneNumber" : "0958774128",
+    "address" : "Zagrebacka 2001"
+  } ]
+}
