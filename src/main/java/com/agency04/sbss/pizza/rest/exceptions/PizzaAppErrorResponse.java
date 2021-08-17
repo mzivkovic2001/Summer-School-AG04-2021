@@ -1,14 +1,14 @@
 package com.agency04.sbss.pizza.rest.exceptions;
 
-public class PizzaErrorResponse {
+public class PizzaAppErrorResponse {
     private int status;
     private String message;
     private long timeStamp;
 
-    public PizzaErrorResponse() {
+    public PizzaAppErrorResponse() {
     }
 
-    public PizzaErrorResponse(int status, String message, long timeStamp) {
+    public PizzaAppErrorResponse(int status, String message, long timeStamp) {
         this.status = status;
         this.message = message;
         this.timeStamp = timeStamp;

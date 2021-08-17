@@ -6,14 +6,14 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class PizzaRestExceptionHandler {
+public class PizzaAppRestExceptionHandler {
 
     // exception handling code here
 
     @ExceptionHandler
-    public ResponseEntity<PizzaErrorResponse> handleException (PizzaNotFoundException exc) {
+    public ResponseEntity<PizzaAppErrorResponse> handleException (PizzaAppNotFoundException exc) {
         // Create a pizza error response
-        PizzaErrorResponse error = new PizzaErrorResponse();
+        PizzaAppErrorResponse error = new PizzaAppErrorResponse();
         error.setStatus(HttpStatus.NOT_FOUND.value());
         error.setMessage(exc.getMessage());
         error.setTimeStamp(System.currentTimeMillis());
@@ -23,9 +23,19 @@ public class PizzaRestExceptionHandler {
     }
 
     @ExceptionHandler
-    public ResponseEntity<PizzaErrorResponse> handleException (Exception exc) {
+    public ResponseEntity<PizzaAppErrorResponse> handleException (PizzaAppBadRequestException exc) {
+        PizzaAppErrorResponse error = new PizzaAppErrorResponse();
+        error.setStatus(HttpStatus.BAD_REQUEST.value());
+        error.setMessage(exc.getMessage());
+        error.setTimeStamp(System.currentTimeMillis());
+
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<PizzaAppErrorResponse> handleException (Exception exc) {
         // Create a pizza error response
-        PizzaErrorResponse error = new PizzaErrorResponse();
+        PizzaAppErrorResponse error = new PizzaAppErrorResponse();
         error.setStatus(HttpStatus.BAD_REQUEST.value());
         error.setMessage(exc.getMessage());
         error.setTimeStamp(System.currentTimeMillis());

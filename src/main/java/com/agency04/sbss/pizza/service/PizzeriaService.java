@@ -1,12 +1,19 @@
 package com.agency04.sbss.pizza.service;
 
 import com.agency04.sbss.pizza.model.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.agency04.sbss.pizza.model.enums.PizzaIngredient;
+import com.agency04.sbss.pizza.model.enums.PizzaSize;
+import com.agency04.sbss.pizza.model.forms.PizzaForm;
+import com.agency04.sbss.pizza.model.forms.PizzeriaInfoForm;
+import com.agency04.sbss.pizza.model.forms.PizzeriaMenuForm;
+import com.agency04.sbss.pizza.repo.IIngredientRepository;
+import com.agency04.sbss.pizza.repo.IPizzaRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -16,8 +23,14 @@ public class PizzeriaService implements IPizzeriaService {
     private String name;
     @Value("${foo.address}")
     private String address;
-    @Autowired
-    private IMockDbService mockDbService;
+
+    private IPizzaRepository pizzaRepository;
+    private IIngredientRepository ingredientRepository;
+
+    public PizzeriaService(IPizzaRepository pizzaRepository, IIngredientRepository ingredientRepository) {
+        this.pizzaRepository = pizzaRepository;
+        this.ingredientRepository = ingredientRepository;
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -25,18 +38,6 @@ public class PizzeriaService implements IPizzeriaService {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    // define init method
-    @PostConstruct
-    public void initIt() {
-        System.out.println(">>SecondPizzeriaService: inside of doMyStartupStuff(). Name: " + name);
-    }
-
-    // define destroy method
-    @PreDestroy
-    public void cleanUp() {
-        System.out.println(">>SecondPizzeriaService: inside of cleanUp().");
     }
 
     @Override
@@ -54,12 +55,38 @@ public class PizzeriaService implements IPizzeriaService {
 
     }
     @Override
-    public PizzeriaInfo getPizzeriaInfo() {
-        return new PizzeriaInfo(getName(), getAddress());
+    public PizzeriaInfoForm getPizzeriaInfo() {
+        return new PizzeriaInfoForm(getName(), getAddress());
     }
 
     @Override
-    public PizzeriaMenu getPizzeriaMenu() {
-        return new PizzeriaMenu(mockDbService.getData("pizzas"), Stream.of(PizzaSize.values()).collect(Collectors.toList()));
+    public PizzeriaMenuForm getPizzeriaMenu() {
+        return new PizzeriaMenuForm(getPizzaList(), Stream.of(PizzaSize.values()).collect(Collectors.toList()));
     }
+
+    @Override
+    public List<Pizza> getPizzaList() {
+        return pizzaRepository.findAll();
+    }
+
+    @Transactional
+    @Override
+    public void insertPizza(PizzaForm pizza) {
+        Set<Ingredient> ingredients = pizza.getPizzaIngredientList().stream().map((PizzaIngredient ingredientEnum) -> {
+            if (!ingredientRepository.existsByPizzaIngredient(ingredientEnum)) {
+                Ingredient insertedIngredient = ingredientRepository.save(new Ingredient(ingredientEnum));
+                return insertedIngredient;
+            } else {
+                return ingredientRepository.getByPizzaIngredient(ingredientEnum);
+            }
+        }).collect(Collectors.toSet());
+        pizzaRepository.save(new Pizza(pizza.getName(), ingredients));
+    }
+
+    @Override
+    public boolean doesPizzaExists(long pizzaId) {
+        return pizzaRepository.existsById(pizzaId);
+    }
+
+
 }

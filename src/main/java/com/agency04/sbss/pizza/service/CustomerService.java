@@ -1,67 +1,69 @@
 package com.agency04.sbss.pizza.service;
 
+import com.agency04.sbss.pizza.repo.ICustomerRepository;
 import com.agency04.sbss.pizza.model.Customer;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.agency04.sbss.pizza.model.CustomerDetails;
+import com.agency04.sbss.pizza.model.forms.CustomerForm;
+import com.agency04.sbss.pizza.rest.exceptions.PizzaAppBadRequestException;
+import com.agency04.sbss.pizza.rest.exceptions.PizzaAppNotFoundException;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.PostConstruct;
-import java.io.IOException;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CustomerService implements ICustomerService {
-    private String key;
-    @Autowired
-    private IMockDbService mockDbService;
+    private ICustomerRepository customerRepository;
+    private ConversionService conversionService;
 
-    @PostConstruct
-    public void initIt() {
-        key = "customers";
-    }
-
-
-    @Override
-    public Customer getCustomerByUsername(String username) {
-        return mockDbService.getDataByPropertyValue(key, "username", username, Customer.class);
+    public CustomerService(ICustomerRepository customerRepository, ConversionService conversionService) {
+        this.customerRepository = customerRepository;
+        this.conversionService = conversionService;
     }
 
     @Override
-    public boolean postCustomer(Customer newCustomer) {
-        newCustomer.setId(mockDbService.getNextId(key));
-        try{
-            mockDbService.insertData(key, newCustomer);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return false;
+    public CustomerForm getCustomerByUsername(String username) {
+        if (!doesCustomerExists(username)) {
+            throw new PizzaAppNotFoundException("Customer with username " + username + " does not exist.");
+        } else {
+            return conversionService.convert(customerRepository.getByUsername(username), CustomerForm.class);
         }
-        return true;
+    }
+
+    @Override
+    public void postCustomer(CustomerForm customerForm) {
+        if(doesCustomerExists(customerForm.getUsername())) {
+            throw new PizzaAppBadRequestException("Username " + customerForm.getUsername() + " is taken by another customer.");
+        } else {
+            Customer newCustomer = conversionService.convert(customerForm, Customer.class);
+            customerRepository.save(newCustomer);
+        }
     }
 
     @Override
     public boolean doesCustomerExists(String username) {
-        return mockDbService.doesDataExists(key, "username", username);
+        return customerRepository.existsByUsername(username);
     }
 
     @Override
-    public boolean updateCustomer(Customer customerToUpdate) {
-        try {
-            mockDbService.updateData(key, "username", customerToUpdate, customerToUpdate.getUsername());
+    public void updateCustomer(CustomerForm customerToUpdate) {
+        if (!doesCustomerExists(customerToUpdate.getUsername())) {
+            throw new PizzaAppNotFoundException("Customer with username " + customerToUpdate.getUsername() + " does not exist.");
+        } else {
+            Customer customer = customerRepository.getByUsername(customerToUpdate.getUsername());
+            CustomerDetails detailsToUpdate = customer.getCustomerDetails();
+            detailsToUpdate.setFirstName(customerToUpdate.getFirstName());
+            detailsToUpdate.setLastName(customerToUpdate.getLastName());
+            detailsToUpdate.setPhone(customerToUpdate.getPhone());
+            customerRepository.save(customer);
         }
-        catch (Exception ex) {
-            ex.printStackTrace();
-            return false;
-        }
-        return true;
     }
 
     @Override
-    public boolean deleteCustomer(String username) {
-        Customer customerToDelete = getCustomerByUsername(username);
-        try {
-            mockDbService.deleteData(key, "username", customerToDelete, customerToDelete.getUsername());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return false;
+    public void deleteCustomer(String username) {
+        if(!doesCustomerExists(username)) {
+            throw new PizzaAppNotFoundException("Customer with username " + username + " does not exist.");
+        } else {
+            customerRepository.deleteByUsername(username);
         }
-        return true;
     }
 }
