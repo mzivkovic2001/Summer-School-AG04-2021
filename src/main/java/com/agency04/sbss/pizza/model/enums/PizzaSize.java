@@ -1,4 +1,4 @@
-package com.agency04.sbss.pizza.model;
+package com.agency04.sbss.pizza.model.enums;
 
 public enum PizzaSize {
     SMALL("S", 0),

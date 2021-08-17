@@ -1,10 +1,10 @@
-package com.agency04.sbss.pizza.model;
+package com.agency04.sbss.pizza.model.forms;
 
-public class PizzeriaInfo {
+public class PizzeriaInfoForm {
     private String name;
     private String address;
 
-    public PizzeriaInfo(String name, String address) {
+    public PizzeriaInfoForm(String name, String address) {
         this.name = name;
         this.address = address;
     }

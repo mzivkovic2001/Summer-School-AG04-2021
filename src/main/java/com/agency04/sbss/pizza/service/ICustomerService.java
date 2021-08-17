@@ -1,13 +1,11 @@
 package com.agency04.sbss.pizza.service;
 
-import com.agency04.sbss.pizza.model.Customer;
-
-import java.io.IOException;
+import com.agency04.sbss.pizza.model.forms.CustomerForm;
 
 public interface ICustomerService {
-    Customer getCustomerByUsername(String username);
-    boolean postCustomer(Customer newCustomer);
+    CustomerForm getCustomerByUsername(String username);
+    void postCustomer(CustomerForm customerForm);
     boolean doesCustomerExists(String username);
-    boolean updateCustomer(Customer customerToUpdate);
-    boolean deleteCustomer(String username);
+    void updateCustomer(CustomerForm customerToUpdate);
+    void deleteCustomer(String username);
 }

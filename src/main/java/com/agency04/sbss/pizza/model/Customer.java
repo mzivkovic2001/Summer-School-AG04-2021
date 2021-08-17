@@ -1,70 +1,70 @@
 package com.agency04.sbss.pizza.model;
 
+import javax.persistence.*;
+import java.util.List;
+import java.util.Objects;
+
+@Entity
 public class Customer{
-    private int id;
-    private String name;
-    private String surname;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long customerId;
+
+    @Column(unique=true)
     private String username;
-    private String phoneNumber;
-    private String address;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private CustomerDetails customerDetails;
+
+    @OneToMany(mappedBy = "customer", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    private List<Delivery> deliveries;
 
     public Customer() {
     }
 
-    public Customer(int id, String name, String surname, String username, String phoneNumber, String address) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
+    public Customer(String username, CustomerDetails customerDetails) {
         this.username = username;
-        this.phoneNumber = phoneNumber;
-        this.address = address;
+        this.customerDetails = customerDetails;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getSurname() {
-        return surname;
+    public long getCustomerId() {
+        return customerId;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
     public void setUsername(String username) {
         this.username = username;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public CustomerDetails getCustomerDetails() {
+        return customerDetails;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setCustomerDetails(CustomerDetails customerDetails) {
+        this.customerDetails = customerDetails;
+    }
+
+    public List<Delivery> getDeliveries() {
+        return deliveries;
+    }
+
+    public void setDeliveries(List<Delivery> deliveries) {
+        this.deliveries = deliveries;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Customer)) return false;
+        Customer customer = (Customer) o;
+        return getCustomerId() == customer.getCustomerId() && getUsername().equals(customer.getUsername()) && getCustomerDetails().equals(customer.getCustomerDetails()) && getDeliveries().equals(customer.getDeliveries());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getCustomerId(), getUsername(), getCustomerDetails(), getDeliveries());
     }
 }
