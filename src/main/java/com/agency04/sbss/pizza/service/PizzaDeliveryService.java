@@ -40,18 +40,17 @@ public class PizzaDeliveryService implements IPizzaDeliveryService {
 
     @Override
     public List<DeliveryForm> getCurrentOrders() {
-        List<DeliveryForm> deliveryForms = deliveryRepository.findAll().stream().map(delivery -> {
-            return conversionService.convert(delivery, DeliveryForm.class);
-        }).collect(Collectors.toList());
+        List<DeliveryForm> deliveryForms = deliveryRepository.findAll().stream()
+                .map(delivery -> conversionService.convert(delivery, DeliveryForm.class)).collect(Collectors.toList());
         return deliveryForms;
     }
 
     void checkIfOrderedPizzasExist(List<PizzaOrderForm> pizzaOrderForms) {
-        pizzaOrderForms.stream().forEach(pizzaForm -> {
-            if (!this.pizzaRepository.existsById(pizzaForm.getPizzaId())) {
-                throw new PizzaAppNotFoundException("Pizza with an id of " + pizzaForm.getPizzaId() + " does not exist");
+        for (PizzaOrderForm pizzaOrderForm: pizzaOrderForms) {
+            if (!this.pizzaRepository.existsById(pizzaOrderForm.getPizzaId())) {
+                throw new PizzaAppNotFoundException("Pizza with an id of " + pizzaOrderForm.getPizzaId() + " does not exist");
             }
-        });
+        }
     }
 
     void checkIfCustomerExist(String customerUsername) {

@@ -2,8 +2,8 @@ package com.agency04.sbss.pizza.model;
 
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Pizza {
@@ -16,12 +16,12 @@ public class Pizza {
 
     @ManyToMany
     @JoinTable(name = "ingredients", joinColumns = @JoinColumn(name = "ingredientName"))
-    private List<Ingredient> ingredients;
+    private Set<Ingredient> ingredients;
 
     public Pizza() {
     }
 
-    public Pizza(String name, List<Ingredient> ingredients) {
+    public Pizza(String name, Set<Ingredient> ingredients) {
         this.name = name;
         this.ingredients = ingredients;
     }
@@ -38,11 +38,11 @@ public class Pizza {
         this.name = name;
     }
 
-    public List<Ingredient> getIngredients() {
+    public Set<Ingredient> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(List<Ingredient> ingredients) {
+    public void setIngredients(Set<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
 

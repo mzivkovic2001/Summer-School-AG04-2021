@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -71,14 +72,14 @@ public class PizzeriaService implements IPizzeriaService {
     @Transactional
     @Override
     public void insertPizza(PizzaForm pizza) {
-        List<Ingredient> ingredients = pizza.getPizzaIngredientList().stream().map((PizzaIngredient ingredientEnum) -> {
+        Set<Ingredient> ingredients = pizza.getPizzaIngredientList().stream().map((PizzaIngredient ingredientEnum) -> {
             if (!ingredientRepository.existsByPizzaIngredient(ingredientEnum)) {
                 Ingredient insertedIngredient = ingredientRepository.save(new Ingredient(ingredientEnum));
                 return insertedIngredient;
             } else {
                 return ingredientRepository.getByPizzaIngredient(ingredientEnum);
             }
-        }).collect(Collectors.toList());
+        }).collect(Collectors.toSet());
         pizzaRepository.save(new Pizza(pizza.getName(), ingredients));
     }
 

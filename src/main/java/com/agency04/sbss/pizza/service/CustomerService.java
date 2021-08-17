@@ -58,7 +58,6 @@ public class CustomerService implements ICustomerService {
         }
     }
 
-    @Transactional
     @Override
     public void deleteCustomer(String username) {
         if(!doesCustomerExists(username)) {
